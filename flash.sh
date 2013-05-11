@@ -1,11 +1,12 @@
 #!/bin/bash
 
-DEFAULT_IMAGE_FILE_URL="http://downloads.raspberrypi.org/images/raspbian/2012-12-16-wheezy-raspbian/2012-12-16-wheezy-raspbian.zip"
+DEFAULT_IMAGE_FILE_URL="http://downloads.raspberrypi.org/images/raspbian/2013-02-09-wheezy-raspbian/2013-02-09-wheezy-raspbian.zip"
 
+echo "Searching for available disk images..."
 find ~ -name "*.img" -type f -size +1048576 | xargs ls -l {}
 read -e -p "Which image should be use? " IMAGE_FILE
 if [ "$IMAGE_FILE" == "" ] ; then
-  echo "No image file selected; downloading one"
+  echo "No image file selected; downloading one from ${DEFAULT_IMAGE_FILE_URL}"
   wget $DEFAULT_IMAGE_FILE_URL
   unzip $(basename $DEFAULT_IMAGE_FILE_URL)
   IMAGE_FILE=$(basename $DEFAULT_IMAGE_FILE_URL .zip).img
