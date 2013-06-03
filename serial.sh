@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Disconnect anybody current connected
-PID=$(ps -lt tty.usbserial | grep "tty.usbserial" | sed -e 's/^[[:space:]]*//' | tr -s ' ' | cut -d' ' -f2)
+TTY=$($(dirname $0)/which.sh)
+echo ${TTY}
+PID=$(ps -lt ${TTY} | grep "${TTY}" | sed -e 's/^[[:space:]]*//' | tr -s ' ' | cut -d' ' -f2)
 if [ "$PID" != "" ] ; then
   echo "Currently connected PID: $PID"
   read -n1 -p "Disconnect? [yN] " DISCONNECT
@@ -16,4 +18,5 @@ if [ "$PID" != "" ] ; then
   sleep 2
 fi
 
-screen /dev/tty.usbserial 115200
+screen ${TTY} 115200
+
